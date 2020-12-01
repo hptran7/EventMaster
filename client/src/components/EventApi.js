@@ -1,6 +1,9 @@
 import Axios from 'axios'
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
+import { Card } from 'antd';
+
+const { Meta } = Card;
 
 function EventApi(){
 
@@ -15,11 +18,20 @@ function EventApi(){
     }
 
     const eventItem = events.map((event)=>{
-        return <li>
-            <img src={event.images[6].url}/>
-            <div>{event.name}</div>
-            <button>Detail</button>
-            </li>
+        // return <li>
+        //     <img src={event.images[6].url}/>
+        //     <div>{event.name}</div>
+        //     <button>Detail</button>
+        //     </li>
+        return <Card
+        hoverable
+        style={{ width: 350 }}
+        cover={<img alt="example" src={event.images[6].url} />}
+      >
+        <Meta title={event.name} description="" />
+        <button>Detail</button>
+      </Card>
+      
     })
 
     return(
