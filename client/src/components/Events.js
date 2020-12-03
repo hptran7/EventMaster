@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import { Card } from 'antd';
 
-const { Meta } = Card;
 
 function Events(props){
 
