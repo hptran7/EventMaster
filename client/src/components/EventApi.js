@@ -1,9 +1,12 @@
 import Axios from 'axios'
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Card } from 'antd';
+import "../css/eventapi.css"
 
-const { Meta } = Card;
+
+
+
+
 
 function EventApi(){
 
@@ -17,29 +20,28 @@ function EventApi(){
         setEvents(events.data._embedded.events)
     }
 
-    const eventItem = events.map((event)=>{
-        // return <li>
-        //     <img src={event.images[6].url}/>
-        //     <div>{event.name}</div>
-        //     <button>Detail</button>
-        //     </li>
-        return <Card
-        hoverable
-        style={{ width: 350 }}
-        cover={<img alt="example" src={event.images[6].url} />}
-      >
-        <Meta title={event.name} description="" />
-        <button>Detail</button>
-      </Card>
-      
+
+    const eventItem = events.map((event,index)=>{
+      return <div className="card" key={index}>
+          <div className="projectImageWrapper">
+        <img className="screenshot" src={event.images[2].url}/>
+      </div>
+      <div className="cardBody">
+        <p>{event.name}</p>
+        <button className="btn">Detail</button>
+ 
+
+      </div>
+    </div>
+  
     })
 
     return(
         <div>
             <h1>Event Api</h1>
-            <ul>
+            <div className="grid-api">
                 {eventItem}
-            </ul>
+            </div>
         </div>
     )
 }
