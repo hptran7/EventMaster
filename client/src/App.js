@@ -29,7 +29,7 @@ function App() {
   return (
     <div>
       <h1>Main Page</h1>
-
+        
         <Events eventList = {events} onDelete={fetchEvents}></Events>
 
     </div>

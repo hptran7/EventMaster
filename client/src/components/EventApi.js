@@ -13,10 +13,10 @@ import Modal from './Modal'
 function EventApi(){
 
   const [showModal,setShowModal]= useState(false)
-  const [eventDetai, setEventDetail] = useState({})
+  const [eventsDetail, setEventDetail] = useState({})
 
-  const showModalonClick=() =>{
-    
+  const showModalonClick=(eventModal) =>{
+    setEventDetail(eventModal)
     setShowModal(prev => !prev)
   }
 
@@ -33,27 +33,38 @@ function EventApi(){
 
 
     const eventItem = events.map((event,index)=>{
-      let eventModal={}
-      return <div>
+      let eventModal={
+        name:event.name,
+        img:event.images[2].url,
+        date:event.dates.start.localDate,
+        time:event.dates.start.localTime,
+        info:event.info,
+        location: event._embedded.venues[0].name,
+        address:event._embedded.venues[0].address.line1,
+        city: event._embedded.venues[0].city.name,
+        state: event._embedded.venues[0].state.stateCode,
+        postalCode: event._embedded.venues[0].postalCode
+      }
+      return <li key={index}><div>
       <div className="card" key={index}>
           <div className="projectImageWrapper">
         <img className="screenshot" src={event.images[2].url}/>
       </div>
       <div className="cardBody">
         <p>{event.name}</p>
-        <button className="btn" onClick={()=>showModalonClick()}>Detail</button>
+        <button className="btn" onClick={()=>showModalonClick(eventModal)}>Detail</button>
  
 
       </div>
     </div>
     </div>
-  
+    </li>
     })
 
     return(
         <div>
             <h1>Event Api</h1>
-            <Modal showModal={showModal} setShowModal ={setShowModal}/>
+            <Modal showModal={showModal} setShowModal ={setShowModal} detail={eventsDetail}/>
             <div className="grid-api">
                 {eventItem}
             </div>

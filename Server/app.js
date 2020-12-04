@@ -6,7 +6,13 @@ const cors = require('cors')
 app.use(cors())
 app.use(express.json())
 
-
+const users=[{
+    username:'john',
+    password: 'password'
+},{
+    username:'Marydoe',
+    password:'password'
+}]
 
 app.get("/hello",(req,res)=>{
     res.send("hello")
@@ -87,6 +93,23 @@ app.post('/update-event/:eventID',(req,res)=>{
         res.json({"success":true})
     })
 })
+
+app.post('/login', (req,res)=>{
+    let username = req.body.username;
+    let password = req.body.password
+
+    const persistedUser = users.find(user=>{
+        return user.username== username && user.password ==password
+    })
+
+    if (persistedUser){
+        res.json({sucess:true})
+    } else {
+        res.json({sucess:false})
+    }
+})
+
+
 
 app.listen(8080,()=>{
     console.log("Server is Running")

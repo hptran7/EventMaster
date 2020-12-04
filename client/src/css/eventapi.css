@@ -21,6 +21,9 @@ p{
     font-size: 1rem;
     color: var(--offWhite);
 }
+li{
+    list-style: none;
+}
 
 .card {
     width: 304px;

@@ -1,5 +1,4 @@
 import React from 'react'
-import "../css/eventapi.css"
 import styled from 'styled-components'
 import {MdClose} from 'react-icons/md'
 
@@ -16,8 +15,8 @@ const Background = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  width: 800px;
-  height: 500px;
+  width: 1000px;
+  height: 600px;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
   background: #fff;
   color: #000;
@@ -43,7 +42,8 @@ const ModalContent = styled.div`
   line-height: 1.8;
   color: #141414;
   p {
-    margin-bottom: 1rem;
+    margin: 0;
+    color:black
   }
   button {
     padding: 10px 24px;
@@ -51,6 +51,11 @@ const ModalContent = styled.div`
     color: #fff;
     border: none;
   }
+`;
+
+const info = styled.div`
+  height:30px;
+  overflow:auto;
 `;
 
 const CloseModalButton = styled(MdClose)`
@@ -64,6 +69,7 @@ const CloseModalButton = styled(MdClose)`
   z-index: 10;
 `;
 
+
 function Modal(props){
 
     return (
@@ -71,10 +77,17 @@ function Modal(props){
           {props.showModal ? (
             <Background>
                 <ModalWrapper showModal={props.showModal}>
-                  <ModalImg src={require('./modal.jpg')} alt='camera' />
+                  <ModalImg src={props.detail.img} alt='camera' />
                   <ModalContent>
-                    <h1>Are you ready?</h1>
-                    <p>Get exclusive access to our next launch.</p>
+                    <h2>{props.detail.name}</h2>
+                    <p>{props.detail.location}</p>
+                    <p>{props.detail.time}</p>
+                    <p>{props.detail.date}</p>
+                    <p>{props.detail.location}</p>
+                    <p>{props.detail.address}</p>
+                    <p>{props.detail.city}</p>
+                    <p>{props.detail.state}</p>
+                    <info>{props.detail.info}</info>
                     <button>Join Now</button>
                   </ModalContent>
                   <CloseModalButton
