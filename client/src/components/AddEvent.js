@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
 
 function AddEvent(){
 
 
     const [event,setEvent] = useState({})
+    const [newEventId, setNewEventId]= useState(null)
     const handleChange=(e)=>{
         setEvent({
             ...event,
@@ -13,6 +15,11 @@ function AddEvent(){
     }
     const handleOnClick= async()=>{
         await axios.post("http://localhost:8080/add-event",event)
+        .then((result)=> setNewEventId(result.data.success))
+        await axios.post("http://localhost:8080/userEvent",{
+            userId:1,
+            eventId:newEventId
+        })
     }
      
 
@@ -34,4 +41,8 @@ function AddEvent(){
     )
 }
 
-export default AddEvent
+const mapStateToProps= (state)=>{
+
+}
+
+export default connect()(AddEvent)

@@ -48,9 +48,31 @@ app.post('/add-event',(req,res)=>{
         address:address
     })
 
-    event.save().then((newEvent)=> res.json({success:true}))
+    event.save().then((newEvent)=>res.json({success:newEvent.id}) )
 
 })
+app.post('/userEvent',(req,res)=>{
+    let userId = req.body.userId
+    let eventId = req.body.eventId
+    let eventUser =  models.UserEvent.build({
+        userId:userId,
+        eventId:eventId,
+    })
+    eventUser.save().then((result)=> res.json({success:true}))
+})
+
+const addUserEvent= async (userId,eventId)=>{
+    console.log(userId,eventId)
+    await app.post('/userEvent',(req,res)=>{
+        let userId = userid
+        let eventId = eventid
+        let eventUser =  models.UserEvent.build({
+            userId:userId,
+            eventId:eventId,
+        })
+        eventUser.save().then((result)=> res.json({success:true}))
+    })
+}
 
 app.post('/delete-event/:eventID',(req,res)=>{
     let id = req.params.eventID
@@ -94,18 +116,32 @@ app.post('/update-event/:eventID',(req,res)=>{
     })
 })
 
-app.post('/login', (req,res)=>{
+app.post('/create-user',(req,res)=>{
+    let username= req.body.username
+    let password = req.body.password
+
+    const user = models.User.build({
+        username:username,
+        password: password
+    })
+    user.save().then((result)=> res.json({success:true}))
+})
+
+app.post('/login', async (req,res)=>{
     let username = req.body.username;
     let password = req.body.password
 
-    const persistedUser = users.find(user=>{
-        return user.username== username && user.password ==password
+    const persistedUser = await models.User.findOne({
+        where:{
+            username:username,
+            password:password
+        }
     })
 
     if (persistedUser){
-        res.json({sucess:true})
+        res.json({success:true})
     } else {
-        res.json({sucess:false})
+        res.json({success:false})
     }
 })
 
