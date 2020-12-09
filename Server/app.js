@@ -20,7 +20,7 @@ app.get("/", authentication, async (req, res) => {
   });
 });
 
-app.post("/add-event", async (req, res) => {
+app.post("/add-event", authentication, async (req, res) => {
   let name = req.body.name;
   let image = req.body.image;
   let date = req.body.date;
@@ -50,7 +50,7 @@ app.post("/add-event", async (req, res) => {
   res.json({ success: true });
 });
 
-app.post("/userEvent", (req, res) => {
+app.post("/userEvent", authentication, (req, res) => {
   let userId = req.body.userId;
   let eventId = req.body.eventId;
   let eventUser = models.UserEvent.build({
@@ -68,7 +68,7 @@ const addUserEvent = (userId, eventId) => {
   eventUser.save();
 };
 
-app.post("/delete-event/:eventID", (req, res) => {
+app.post("/delete-event/:eventID", authentication, (req, res) => {
   let id = req.params.eventID;
 
   models.Event.destroy({
@@ -79,7 +79,7 @@ app.post("/delete-event/:eventID", (req, res) => {
   res.send(id);
 });
 
-app.post("/update-event/:eventID", (req, res) => {
+app.post("/update-event/:eventID", authentication, (req, res) => {
   const id = req.params.eventID;
   let name = req.body.name;
   let image = req.body.image;
