@@ -1,48 +1,84 @@
-import React, {useState, useEffect} from 'react'
-import axios from 'axios'
-import { connect } from 'react-redux'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { connect } from "react-redux";
 
-function AddEvent(){
+function AddEvent() {
+  const [event, setEvent] = useState({});
+  const [newEventId, setNewEventId] = useState(null);
+  const handleChange = (e) => {
+    setEvent({
+      ...event,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleOnClick = async () => {
+    await axios
+      .post("http://localhost:8080/add-event", event)
+      .then((result) => setNewEventId(result.data.success));
+  };
 
-
-    const [event,setEvent] = useState({})
-    const [newEventId, setNewEventId]= useState(null)
-    const handleChange=(e)=>{
-        setEvent({
-            ...event,
-            [e.target.name]:e.target.value
-        })
-    }
-    const handleOnClick= async()=>{
-        await axios.post("http://localhost:8080/add-event",event)
-        .then((result)=> setNewEventId(result.data.success))
-        await axios.post("http://localhost:8080/userEvent",{
-            userId:1,
-            eventId:newEventId
-        })
-    }
-     
-
-
-    return(
-        <div>
-            <h1>Add Event</h1>
-            <input type="text" placeholder="Event name" name="name" onChange={handleChange}></input>
-            <input type="text" placeholder="Image" name="image" onChange={handleChange}></input>
-            <input type="text" placeholder="Date...YYYY/MM/DD" name="date" onChange={handleChange}></input>
-            <input type="text" placeholder="Time" name="time" onChange={handleChange}></input>
-            <input type="text" placeholder="Location" name="location" onChange={handleChange}></input>
-            <input type="text" placeholder="address" name ="address" onChange={handleChange}></input>
-            <input type="text" placeholder="City" name="city" onChange={handleChange}></input>
-            <input type="text" placeholder="State" name="state" onChange={handleChange}></input>
-            <input type="text" placeholder="Postcode" name="postcode" onChange={handleChange}></input>
-            <button onClick={handleOnClick}>Submit</button>
-        </div>
-    )
+  return (
+    <div>
+      <h1>Add Event</h1>
+      <input
+        type="text"
+        placeholder="Event name"
+        name="name"
+        onChange={handleChange}
+      ></input>
+      <input
+        type="text"
+        placeholder="Image"
+        name="image"
+        onChange={handleChange}
+      ></input>
+      <input
+        type="text"
+        placeholder="Date...YYYY/MM/DD"
+        name="date"
+        onChange={handleChange}
+      ></input>
+      <input
+        type="text"
+        placeholder="Time"
+        name="time"
+        onChange={handleChange}
+      ></input>
+      <input
+        type="text"
+        placeholder="Location"
+        name="location"
+        onChange={handleChange}
+      ></input>
+      <input
+        type="text"
+        placeholder="address"
+        name="address"
+        onChange={handleChange}
+      ></input>
+      <input
+        type="text"
+        placeholder="City"
+        name="city"
+        onChange={handleChange}
+      ></input>
+      <input
+        type="text"
+        placeholder="State"
+        name="state"
+        onChange={handleChange}
+      ></input>
+      <input
+        type="text"
+        placeholder="Postcode"
+        name="postcode"
+        onChange={handleChange}
+      ></input>
+      <button onClick={handleOnClick}>Submit</button>
+    </div>
+  );
 }
 
-const mapStateToProps= (state)=>{
+const mapStateToProps = (state) => {};
 
-}
-
-export default connect()(AddEvent)
+export default connect()(AddEvent);

@@ -15,12 +15,20 @@ app.get("/hello", (req, res) => {
 app.get("/", authentication, async (req, res) => {
   const userId = res.locals.userId;
   console.log(userId);
-  models.Event.findAll().then((events) => {
-    res.json(events);
+  //   models.Event.findAll().then((events) => {
+  //     res.json(events);
+  //   });
+  let events = await models.UserEvent.findAll({
+    include: [{ model: models.Event, as: "userEvent" }],
+    where: {
+      userId: userId,
+    },
   });
+  res.json(events);
 });
 
 app.post("/add-event", authentication, async (req, res) => {
+  const userId = res.locals.userId;
   let name = req.body.name;
   let image = req.body.image;
   let date = req.body.date;
@@ -46,7 +54,7 @@ app.post("/add-event", authentication, async (req, res) => {
   await event.save();
 
   const eventId = event.dataValues.id;
-  await addUserEvent(1, eventId);
+  await addUserEvent(userId, eventId);
   res.json({ success: true });
 });
 
@@ -71,7 +79,7 @@ const addUserEvent = (userId, eventId) => {
 app.post("/delete-event/:eventID", authentication, (req, res) => {
   let id = req.params.eventID;
 
-  models.Event.destroy({
+  models.UserEvent.destroy({
     where: {
       id: id,
     },

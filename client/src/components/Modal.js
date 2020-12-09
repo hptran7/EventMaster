@@ -1,13 +1,14 @@
-import React from 'react'
-import styled from 'styled-components'
-import {MdClose} from 'react-icons/md'
+import React from "react";
+import styled from "styled-components";
+import { MdClose } from "react-icons/md";
+import Axios from "axios";
 
 const Background = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.8);
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   position: fixed;
   display: flex;
   justify-content: center;
@@ -43,7 +44,7 @@ const ModalContent = styled.div`
   color: #141414;
   p {
     margin: 0;
-    color:black
+    color: black;
   }
   button {
     padding: 10px 24px;
@@ -54,8 +55,8 @@ const ModalContent = styled.div`
 `;
 
 const info = styled.div`
-  height:30px;
-  overflow:auto;
+  height: 30px;
+  overflow: auto;
 `;
 
 const CloseModalButton = styled(MdClose)`
@@ -69,37 +70,37 @@ const CloseModalButton = styled(MdClose)`
   z-index: 10;
 `;
 
+function Modal(props) {
+  const joinEvent = async () => {
+    Axios.post("http://localhost:8080/add-event", props.detail);
+  };
 
-function Modal(props){
-
-    return (
-        <>
-          {props.showModal ? (
-            <Background>
-                <ModalWrapper showModal={props.showModal}>
-                  <ModalImg src={props.detail.img} alt='camera' />
-                  <ModalContent>
-                    <h2>{props.detail.name}</h2>
-                    <p>{props.detail.location}</p>
-                    <p>{props.detail.time}</p>
-                    <p>{props.detail.date}</p>
-                    <p>{props.detail.location}</p>
-                    <p>{props.detail.address}</p>
-                    <p>{props.detail.city}</p>
-                    <p>{props.detail.state}</p>
-                    <info>{props.detail.info}</info>
-                    <button>Join Now</button>
-                  </ModalContent>
-                  <CloseModalButton
-                    aria-label='Close modal'
-                    onClick={() => props.setShowModal(prev => !prev)}
-                  />
-                </ModalWrapper>
-            </Background>
-          ) : null}
-        </>
-      );
-   
-    
+  return (
+    <div>
+      {props.showModal ? (
+        <Background>
+          <ModalWrapper showModal={props.showModal}>
+            <ModalImg src={props.detail.image} alt="camera" />
+            <ModalContent>
+              <h2>{props.detail.name}</h2>
+              <p>{props.detail.location}</p>
+              <p>{props.detail.time}</p>
+              <p>{props.detail.date}</p>
+              <p>{props.detail.location}</p>
+              <p>{props.detail.address}</p>
+              <p>{props.detail.city}</p>
+              <p>{props.detail.state}</p>
+              <info>{props.detail.info}</info>
+              <button onClick={() => joinEvent()}>Join Now</button>
+            </ModalContent>
+            <CloseModalButton
+              aria-label="Close modal"
+              onClick={() => props.setShowModal((prev) => !prev)}
+            />
+          </ModalWrapper>
+        </Background>
+      ) : null}
+    </div>
+  );
 }
-export default Modal
+export default Modal;
