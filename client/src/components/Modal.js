@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
 import Axios from "axios";
@@ -50,7 +50,7 @@ const ModalContent = styled.div`
     padding: 10px 24px;
     background: #141414;
     color: #fff;
-    border: none;
+    border-radius: 10px;
   }
 `;
 
@@ -76,17 +76,35 @@ const buttonWrapper = styled.div`
     padding: 10px 24px;
     background: #141414;
     color: #fff;
-    border: none;
+    /* border: none; */
     margin: 0.5 px;
+    border-radius: 0.5px;
+  }
+`;
+const AddFriendSection = styled.div`
+  padding: 10px;
+  button {
+    padding: 5px 10px;
   }
 `;
 
 function Modal(props) {
+  const [showAddFriend, setshowAddFriend] = useState(false);
+  const [userRequest, setuserRequest] = useState({});
+  const handleAddFriendOnChange = (e) => {
+    setuserRequest({
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleSendRequestClick = () => {
+    console.log(userRequest);
+  };
   const joinEvent = async () => {
     Axios.post("http://localhost:8080/add-event", props.detail);
   };
   const inviteFriend = async (id) => {
     console.log(id);
+    setshowAddFriend((prev) => !prev);
   };
   const updateEvent = async (id) => {
     console.log(id);
@@ -150,6 +168,18 @@ function Modal(props) {
                     Covid-19 Alert
                   </button>
                 </buttonWrapper>
+                {showAddFriend ? (
+                  <AddFriendSection>
+                    <input
+                      type="text"
+                      onChange={handleAddFriendOnChange}
+                      name="user"
+                    />
+                    <button onClick={() => handleSendRequestClick()}>
+                      Send Request
+                    </button>
+                  </AddFriendSection>
+                ) : null}
               </ModalContent>
               <CloseModalButton
                 aria-label="Close modal"

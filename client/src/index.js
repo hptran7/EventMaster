@@ -8,6 +8,8 @@ import AddEvent from "./components/AddEvent";
 import EventApi from "./components/EventApi";
 import Login from "./components/Login";
 import BaseLayout from "./components/BaseLayout";
+import Invitation from "./components/Invitation";
+import Notification from "./components/Notification";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./css/store/reducer";
@@ -30,6 +32,8 @@ ReactDOM.render(
             <Route component={AddEvent} path="/add-event"></Route>
             <Route component={EventApi} path="/event-api"></Route>
             <Route component={Login} path="/login"></Route>
+            <Route component={Invitation} path="/invitation-notice"></Route>
+            <Route component={Notification} path="/notification"></Route>
           </Switch>
         </BaseLayout>
       </Provider>
