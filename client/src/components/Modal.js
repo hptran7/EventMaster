@@ -69,38 +69,97 @@ const CloseModalButton = styled(MdClose)`
   padding: 0;
   z-index: 10;
 `;
+const buttonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  button {
+    padding: 10px 24px;
+    background: #141414;
+    color: #fff;
+    border: none;
+    margin: 0.5 px;
+  }
+`;
 
 function Modal(props) {
   const joinEvent = async () => {
     Axios.post("http://localhost:8080/add-event", props.detail);
   };
-
-  return (
-    <div>
-      {props.showModal ? (
-        <Background>
-          <ModalWrapper showModal={props.showModal}>
-            <ModalImg src={props.detail.image} alt="camera" />
-            <ModalContent>
-              <h2>{props.detail.name}</h2>
-              <p>{props.detail.location}</p>
-              <p>{props.detail.time}</p>
-              <p>{props.detail.date}</p>
-              <p>{props.detail.location}</p>
-              <p>{props.detail.address}</p>
-              <p>{props.detail.city}</p>
-              <p>{props.detail.state}</p>
-              <info>{props.detail.info}</info>
-              <button onClick={() => joinEvent()}>Join Now</button>
-            </ModalContent>
-            <CloseModalButton
-              aria-label="Close modal"
-              onClick={() => props.setShowModal((prev) => !prev)}
-            />
-          </ModalWrapper>
-        </Background>
-      ) : null}
-    </div>
-  );
+  const inviteFriend = async (id) => {
+    console.log(id);
+  };
+  const updateEvent = async (id) => {
+    console.log(id);
+  };
+  const covidAlert = async (id) => {
+    console.log(id);
+  };
+  if (props.parentComponent == "EventApi") {
+    return (
+      <div>
+        {props.showModal ? (
+          <Background>
+            <ModalWrapper showModal={props.showModal}>
+              <ModalImg src={props.detail.image} alt="camera" />
+              <ModalContent>
+                <h2>{props.detail.name}</h2>
+                <p>{props.detail.location}</p>
+                <p>{props.detail.time}</p>
+                <p>{props.detail.date}</p>
+                <p>{props.detail.location}</p>
+                <p>{props.detail.address}</p>
+                <p>{props.detail.city}</p>
+                <p>{props.detail.state}</p>
+                <info>{props.detail.info}</info>
+                <button onClick={() => joinEvent()}>Join Now</button>
+              </ModalContent>
+              <CloseModalButton
+                aria-label="Close modal"
+                onClick={() => props.setShowModal((prev) => !prev)}
+              />
+            </ModalWrapper>
+          </Background>
+        ) : null}
+      </div>
+    );
+  } else if (props.parentComponent == "Event") {
+    return (
+      <div>
+        {props.showModal ? (
+          <Background>
+            <ModalWrapper showModal={props.showModal}>
+              <ModalImg src={props.detail.image} alt="camera" />
+              <ModalContent>
+                <h2>{props.detail.name}</h2>
+                <p>{props.detail.location}</p>
+                <p>{props.detail.time}</p>
+                <p>{props.detail.date}</p>
+                <p>{props.detail.location}</p>
+                <p>{props.detail.address}</p>
+                <p>{props.detail.city}</p>
+                <p>{props.detail.state}</p>
+                <info>{props.detail.info}</info>
+                <buttonWrapper>
+                  <button onClick={() => inviteFriend(props.detail.id)}>
+                    Invite Friend
+                  </button>
+                  <button onClick={() => updateEvent(props.detail.id)}>
+                    Update
+                  </button>
+                  <button onClick={() => covidAlert(props.detail.id)}>
+                    Covid-19 Alert
+                  </button>
+                </buttonWrapper>
+              </ModalContent>
+              <CloseModalButton
+                aria-label="Close modal"
+                onClick={() => props.setShowModal((prev) => !prev)}
+              />
+            </ModalWrapper>
+          </Background>
+        ) : null}
+      </div>
+    );
+  }
 }
 export default Modal;

@@ -90,6 +90,7 @@ function EventApi() {
         showModal={showModal}
         setShowModal={setShowModal}
         detail={eventsDetail}
+        parentComponent="EventApi"
       />
       <div className="grid-api">{eventItem}</div>
     </div>
