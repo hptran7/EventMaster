@@ -38,7 +38,6 @@ function Events(props) {
   const showModalonClick = (eventModal) => {
     setEventDetail(eventModal);
     setShowModal((prev) => !prev);
-    console.log(eventModal);
   };
 
   const eventItems = events.map((event) => {

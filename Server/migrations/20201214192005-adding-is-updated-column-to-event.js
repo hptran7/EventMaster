@@ -2,10 +2,10 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.addColumn("Events", "is-updated", Sequelize.INTEGER);
+    return queryInterface.addColumn("Events", "isupdated", Sequelize.INTEGER);
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn("Events", "is-updated");
+    return queryInterface.removeColumn("Events", "isupdated");
   },
 };

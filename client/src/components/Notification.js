@@ -7,7 +7,11 @@ function Notification() {
     fetchAlertEvent();
   }, []);
   const fetchAlertEvent = async () => {
-    console.log("good");
+    let resultEvent = await axios.get("http://localhost:8080/alertEvent");
+    let alertEvent = resultEvent.data.filter((event) => {
+      return event.userEvent.isupdated;
+    });
+    setEvent(alertEvent);
   };
   return (
     <>

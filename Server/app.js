@@ -26,6 +26,16 @@ app.get("/", authentication, async (req, res) => {
   });
   res.json(events);
 });
+app.get("/alertEvent", authentication, async (req, res) => {
+  const userId = res.locals.userId;
+  let events = await models.UserEvent.findAll({
+    include: [{ model: models.Event, as: "userEvent" }],
+    where: {
+      userId: userId,
+    },
+  });
+  res.json(events);
+});
 
 app.post("/add-event", authentication, async (req, res) => {
   const userId = res.locals.userId;
@@ -110,6 +120,26 @@ app.post("/update-event/:eventID", authentication, (req, res) => {
       city: city,
       state: state,
       address: address,
+    },
+    {
+      where: {
+        id: id,
+      },
+    }
+  ).then(() => {
+    res.json({ success: true });
+  });
+});
+
+app.post("/update-event-covid/:eventID", authentication, (req, res) => {
+  const id = req.params.eventID;
+  const covidStatus = 1;
+  const isupdated = 1;
+
+  models.Event.update(
+    {
+      covidStatus: covidStatus,
+      isupdated: isupdated,
     },
     {
       where: {

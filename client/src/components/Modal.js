@@ -110,7 +110,7 @@ function Modal(props) {
     console.log(id);
   };
   const covidAlert = async (id) => {
-    console.log(id);
+    await Axios.post(`http://localhost:8080/update-event-covid/${id}`);
   };
   if (props.parentComponent == "EventApi") {
     return (
@@ -133,7 +133,9 @@ function Modal(props) {
               </ModalContent>
               <CloseModalButton
                 aria-label="Close modal"
-                onClick={() => props.setShowModal((prev) => !prev)}
+                onClick={() => {
+                  props.setShowModal((prev) => !prev);
+                }}
               />
             </ModalWrapper>
           </Background>
@@ -183,7 +185,10 @@ function Modal(props) {
               </ModalContent>
               <CloseModalButton
                 aria-label="Close modal"
-                onClick={() => props.setShowModal((prev) => !prev)}
+                onClick={() => {
+                  props.setShowModal((prev) => !prev);
+                  setshowAddFriend(false);
+                }}
               />
             </ModalWrapper>
           </Background>
