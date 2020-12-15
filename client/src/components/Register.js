@@ -68,8 +68,9 @@ const LoginBar = styled.div`
 `;
 
 //Function section
-function Login(props) {
+function Register(props) {
   const [user, setUser] = useState({});
+  const [message, setMessage] = useState("");
 
   const handelOnChange = (e) => {
     setUser({
@@ -79,21 +80,22 @@ function Login(props) {
   };
   const handleLogin = async () => {
     await perFormLoginRequest();
-    history.push("/");
   };
 
   const perFormLoginRequest = async () => {
-    await axios.post("http://localhost:8080/login", user).then((result) => {
-      const token = result.data.token;
-      localStorage.setItem("jsonwebtoken", token);
-      setAuthenticationHeader(token);
-    });
+    await axios
+      .post("http://localhost:8080/create-user", user)
+      .then((result) => {
+        if ((result.data.success = true)) {
+          setMessage("You have successful registered new user!");
+        }
+      });
   };
   return (
     <>
       <Container>
         <LoginContainer>
-          <h2>Login</h2>
+          <h2>Register</h2>
           <LoginBar>
             <p>Username:</p>
             <input
@@ -109,10 +111,11 @@ function Login(props) {
               placeholder="password"
               onChange={handelOnChange}
             ></input>
-            <button onClick={handleLogin}>Login</button>
+            <button onClick={handleLogin}>Register</button>
           </LoginBar>
-          <NavLink to="/register" activeStyle>
-            <button>Register</button>
+          {message ? <div>{message}</div> : null}
+          <NavLink to="/login" activeStyle>
+            <button>Login</button>
           </NavLink>
         </LoginContainer>
       </Container>
@@ -120,4 +123,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default Register;

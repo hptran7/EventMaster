@@ -16,6 +16,7 @@ import reducer from "./css/store/reducer";
 import { setAuthenticationHeader } from "./utils/authenticate";
 import EventUpdate from "./components/EventUpdate";
 import history from "./utils/history";
+import Register from "./components/Register";
 const store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -34,6 +35,7 @@ ReactDOM.render(
             <Route component={AddEvent} path="/add-event"></Route>
             <Route component={EventApi} path="/event-api"></Route>
             <Route component={Login} path="/login"></Route>
+            <Route component={Register} path="/register"></Route>
             <Route component={Invitation} path="/invitation-notice"></Route>
             <Route component={Notification} path="/notification"></Route>
             <Route

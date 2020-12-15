@@ -1,14 +1,17 @@
 import { React } from "react";
 
 import "../css/index.css";
+import Navbar from "./Navbar";
 
 function BaseLayout(props) {
   return (
-    <div>
-      <header>Header</header>
+    <>
+      <header>
+        <Navbar />
+      </header>
       <div className="Content">{props.children}</div>
-      <footer>Footer</footer>
-    </div>
+      <footer>footer</footer>
+    </>
   );
 }
 

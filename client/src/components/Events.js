@@ -91,6 +91,11 @@ const ButtonWrapper = styled.div`
     border-radius: 10px;
     font-family: "Roboto", sans-serif;
   }
+  button:hover {
+    transition: all 0.2s ease-in-out;
+    background: #3d9c80;
+    cursor: pointer;
+  }
 `;
 
 //function Section
