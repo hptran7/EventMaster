@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
 import AddEvent from "./components/AddEvent";
 import EventApi from "./components/EventApi";
 import Login from "./components/Login";
@@ -14,6 +14,8 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./css/store/reducer";
 import { setAuthenticationHeader } from "./utils/authenticate";
+import EventUpdate from "./components/EventUpdate";
+import history from "./utils/history";
 const store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -24,8 +26,8 @@ setAuthenticationHeader(token);
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
+    <Provider store={store}>
+      <Router history={history}>
         <BaseLayout>
           <Switch>
             <Route component={App} path="/" exact></Route>
@@ -34,10 +36,14 @@ ReactDOM.render(
             <Route component={Login} path="/login"></Route>
             <Route component={Invitation} path="/invitation-notice"></Route>
             <Route component={Notification} path="/notification"></Route>
+            <Route
+              component={EventUpdate}
+              path="/update-event/:eventid"
+            ></Route>
           </Switch>
         </BaseLayout>
-      </Provider>
-    </BrowserRouter>
+      </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

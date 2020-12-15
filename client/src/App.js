@@ -7,8 +7,6 @@ import Events from "./components/Events";
 function App() {
   return (
     <div>
-      <h1>Main Page</h1>
-
       <Events></Events>
     </div>
   );

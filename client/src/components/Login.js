@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { setAuthenticationHeader } from "../utils/authenticate";
+import history from "../utils/history";
 
 function Login(props) {
   const [user, setUser] = useState({});
@@ -12,8 +13,9 @@ function Login(props) {
       [e.target.name]: e.target.value,
     });
   };
-  const handleLogin = () => {
-    perFormLoginRequest();
+  const handleLogin = async () => {
+    await perFormLoginRequest();
+    history.push("/");
   };
 
   const perFormLoginRequest = async () => {
@@ -33,7 +35,7 @@ function Login(props) {
         onChange={handelOnChange}
       ></input>
       <input
-        type="text"
+        type="password"
         name="password"
         placeholder="password"
         onChange={handelOnChange}

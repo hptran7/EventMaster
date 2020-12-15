@@ -37,10 +37,20 @@ app.get("/alertEvent", authentication, async (req, res) => {
   res.json(events);
 });
 
+app.get("/update-event/:eventid", authentication, async (req, res) => {
+  const eventId = req.params.eventid;
+  const event = await models.Event.findOne({
+    where: {
+      id: eventId,
+    },
+  });
+  res.json(event);
+});
+
 app.post("/add-event", authentication, async (req, res) => {
   const userId = res.locals.userId;
   let name = req.body.name;
-  let image = req.body.image;
+  let image = req.body.image ? req.body.image : "no Image";
   let date = req.body.date;
   let time = req.body.time;
   let location = req.body.location;
@@ -59,6 +69,7 @@ app.post("/add-event", authentication, async (req, res) => {
     city: city,
     state: state,
     address: address,
+    hostBy: res.locals.userId,
   });
 
   await event.save();
@@ -99,6 +110,7 @@ app.post("/delete-event/:eventID", authentication, (req, res) => {
 
 app.post("/update-event/:eventID", authentication, (req, res) => {
   const id = req.params.eventID;
+  console.log(id);
   let name = req.body.name;
   let image = req.body.image;
   let date = req.body.date;

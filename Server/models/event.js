@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       address: DataTypes.STRING,
       covidStatus: DataTypes.INTEGER,
       isupdated: DataTypes.INTEGER,
+      hostBy: DataTypes.INTEGER,
     },
     {
       sequelize,

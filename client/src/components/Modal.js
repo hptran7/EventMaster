@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
 import Axios from "axios";
+import history from "../utils/history";
 
 const Background = styled.div`
   width: 100%;
@@ -48,13 +49,15 @@ const ModalContent = styled.div`
   }
   button {
     padding: 10px 24px;
-    background: #141414;
+    background: #266150;
     color: #fff;
     border-radius: 10px;
+    margin: 5px;
+    font-family: "Roboto", sans-serif;
   }
 `;
 
-const info = styled.div`
+const Info = styled.div`
   height: 30px;
   overflow: auto;
 `;
@@ -69,12 +72,12 @@ const CloseModalButton = styled(MdClose)`
   padding: 0;
   z-index: 10;
 `;
-const buttonWrapper = styled.div`
+const ButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   button {
     padding: 10px 24px;
-    background: #141414;
+    background: #266150;
     color: #fff;
     /* border: none; */
     margin: 0.5 px;
@@ -91,6 +94,7 @@ const AddFriendSection = styled.div`
 function Modal(props) {
   const [showAddFriend, setshowAddFriend] = useState(false);
   const [userRequest, setuserRequest] = useState({});
+
   const handleAddFriendOnChange = (e) => {
     setuserRequest({
       [e.target.name]: e.target.value,
@@ -99,6 +103,15 @@ function Modal(props) {
   const handleSendRequestClick = () => {
     console.log(userRequest);
   };
+
+  const checkHost = (userId, hostId) => {
+    if (userId == hostId) {
+      console.log("good");
+    } else {
+      console.log("bad");
+    }
+  };
+
   const joinEvent = async () => {
     Axios.post("http://localhost:8080/add-event", props.detail);
   };
@@ -107,7 +120,7 @@ function Modal(props) {
     setshowAddFriend((prev) => !prev);
   };
   const updateEvent = async (id) => {
-    console.log(id);
+    history.push(`/update-event/${id}`);
   };
   const covidAlert = async (id) => {
     await Axios.post(`http://localhost:8080/update-event-covid/${id}`);
@@ -128,7 +141,7 @@ function Modal(props) {
                 <p>{props.detail.address}</p>
                 <p>{props.detail.city}</p>
                 <p>{props.detail.state}</p>
-                <info>{props.detail.info}</info>
+                <Info>{props.detail.info}</Info>
                 <button onClick={() => joinEvent()}>Join Now</button>
               </ModalContent>
               <CloseModalButton
@@ -148,28 +161,32 @@ function Modal(props) {
         {props.showModal ? (
           <Background>
             <ModalWrapper showModal={props.showModal}>
-              <ModalImg src={props.detail.image} alt="camera" />
+              <ModalImg src={props.detail.userEvent.image} alt="camera" />
               <ModalContent>
-                <h2>{props.detail.name}</h2>
-                <p>{props.detail.location}</p>
-                <p>{props.detail.time}</p>
-                <p>{props.detail.date}</p>
-                <p>{props.detail.location}</p>
-                <p>{props.detail.address}</p>
-                <p>{props.detail.city}</p>
-                <p>{props.detail.state}</p>
-                <info>{props.detail.info}</info>
-                <buttonWrapper>
+                <h2>{props.detail.userEvent.name}</h2>
+                <p>{props.detail.userEvent.location}</p>
+                <p>{props.detail.userEvent.time}</p>
+                <p>{props.detail.userEvent.date}</p>
+                <p>{props.detail.userEvent.location}</p>
+                <p>{props.detail.userEvent.address}</p>
+                <p>{props.detail.userEvent.city}</p>
+                <p>{props.detail.userEvent.state}</p>
+                <Info>{props.detail.userEvent.info}</Info>
+                <ButtonWrapper>
                   <button onClick={() => inviteFriend(props.detail.id)}>
                     Invite Friend
                   </button>
-                  <button onClick={() => updateEvent(props.detail.id)}>
-                    Update
-                  </button>
-                  <button onClick={() => covidAlert(props.detail.id)}>
-                    Covid-19 Alert
-                  </button>
-                </buttonWrapper>
+                  {props.EventHostByUser ? (
+                    <div>
+                      <button onClick={() => updateEvent(props.detail.eventId)}>
+                        Update
+                      </button>
+                      <button onClick={() => covidAlert(props.detail.id)}>
+                        Covid-19 Alert
+                      </button>
+                    </div>
+                  ) : null}
+                </ButtonWrapper>
                 {showAddFriend ? (
                   <AddFriendSection>
                     <input

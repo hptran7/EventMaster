@@ -1,9 +1,13 @@
-.Content{
+.Content {
   padding: 50px;
-  background: #99CED3;
+  background: #e8cebf;
 }
-header{
-  border-bottom: 6px solid var(--gold);
-  padding: 15px;
-  background-color:  rgba(17, 17, 17, 0.9);
+header {
+  border-bottom: 6px solid #ddaf94;
+  padding: 30px;
+  background-color: #fdf8f5;
+}
+h1 {
+  color: #fdf8f5;
+  font-size: 50px;
 }

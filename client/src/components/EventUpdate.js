@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { connect } from "react-redux";
-import history from "../utils/history";
+import { useParams } from "react-router-dom";
 
-//Styled component Section
 const EventContainer = styled.div`
   font-family: "Roboto", sans-serif;
   max-width: 800px;
@@ -77,26 +75,39 @@ const EventCity = styled.div`
   }
 `;
 
-//function Section
-function AddEvent(props) {
+//function section
+function EventUpdate(props) {
+  const [eventNeedUpdatedId, setEventNeedUpdatedId] = useState(null);
   const [event, setEvent] = useState({});
-  const [newEventId, setNewEventId] = useState(null);
+  const [eventTarget, setEventTarger] = useState({});
   const handleChange = (e) => {
     setEvent({
       ...event,
       [e.target.name]: e.target.value,
     });
+    setEventTarger({
+      ...eventTarget,
+      [e.target.name]: e.target.value,
+    });
   };
+
+  useEffect(() => {
+    handleOnLoad();
+  }, []);
+  const { eventid } = useParams();
   const handleOnClick = async () => {
-    await axios
-      .post("http://localhost:8080/add-event", event)
-      .then((result) => setNewEventId(result.data.success))
-      .then(history.push("/"));
+    const url = `http://localhost:8080/update-event/${eventid}`;
+    await axios.post(url, event).then(props.history.push("/"));
+  };
+  const handleOnLoad = async () => {
+    const url = `http://localhost:8080/update-event/${eventid}`;
+    const needUpdatedEvent = await axios.get(url);
+    setEventTarger(needUpdatedEvent.data);
   };
 
   return (
     <EventContainer>
-      <h1>Add Event</h1>
+      <h1>Update Event</h1>
       <EventName>
         <p>Name:</p>
         <input
@@ -104,6 +115,7 @@ function AddEvent(props) {
           placeholder="Event name"
           name="name"
           onChange={handleChange}
+          value={eventTarget.name}
         ></input>
       </EventName>
       <EventImage>
@@ -113,6 +125,7 @@ function AddEvent(props) {
           placeholder="Image"
           name="image"
           onChange={handleChange}
+          value={eventTarget.image}
         ></input>
       </EventImage>
       <EventDateTime>
@@ -122,6 +135,7 @@ function AddEvent(props) {
           placeholder="YYYY-MM-DD"
           name="date"
           onChange={handleChange}
+          value={eventTarget.date}
         ></input>
         <p>Time:</p>
         <input
@@ -129,6 +143,7 @@ function AddEvent(props) {
           placeholder="HH:MM:SS"
           name="time"
           onChange={handleChange}
+          value={eventTarget.time}
         ></input>
       </EventDateTime>
       <EventLocation>
@@ -138,6 +153,7 @@ function AddEvent(props) {
           placeholder="Location"
           name="location"
           onChange={handleChange}
+          value={eventTarget.location}
         ></input>
       </EventLocation>
       <EventAddress>
@@ -147,6 +163,7 @@ function AddEvent(props) {
           placeholder="address"
           name="address"
           onChange={handleChange}
+          value={eventTarget.address}
         ></input>
       </EventAddress>
       <EventCity>
@@ -156,6 +173,7 @@ function AddEvent(props) {
           placeholder="City"
           name="city"
           onChange={handleChange}
+          value={eventTarget.city}
         ></input>
         <p>State</p>
         <input
@@ -163,6 +181,7 @@ function AddEvent(props) {
           placeholder="State"
           name="state"
           onChange={handleChange}
+          value={eventTarget.state}
         ></input>
         <p>Postcode</p>
         <input
@@ -170,6 +189,7 @@ function AddEvent(props) {
           placeholder="Postcode"
           name="postcode"
           onChange={handleChange}
+          value={eventTarget.postcode}
         ></input>
       </EventCity>
 
@@ -178,6 +198,4 @@ function AddEvent(props) {
   );
 }
 
-const mapStateToProps = (state) => {};
-
-export default connect()(AddEvent);
+export default EventUpdate;
