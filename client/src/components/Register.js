@@ -84,7 +84,7 @@ function Register(props) {
 
   const perFormLoginRequest = async () => {
     await axios
-      .post("http://localhost:8080/create-user", user)
+      .post("https://eventmaster-dc.herokuapp.com/create-user", user)
       .then((result) => {
         if ((result.data.success = true)) {
           setMessage("You have successful registered new user!");

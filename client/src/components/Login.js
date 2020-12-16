@@ -66,10 +66,17 @@ const LoginBar = styled.div`
     width: 80px;
   }
 `;
+const ErrorMessage = styled.div`
+  p {
+    font-size: 15px;
+    color: black;
+  }
+`;
 
 //Function section
 function Login(props) {
   const [user, setUser] = useState({});
+  const [message, setMessage] = useState("");
 
   const handelOnChange = (e) => {
     setUser({
@@ -79,15 +86,22 @@ function Login(props) {
   };
   const handleLogin = async () => {
     await perFormLoginRequest();
-    history.push("/");
   };
 
   const perFormLoginRequest = async () => {
-    await axios.post("http://localhost:8080/login", user).then((result) => {
-      const token = result.data.token;
-      localStorage.setItem("jsonwebtoken", token);
-      setAuthenticationHeader(token);
-    });
+    await axios
+      .post("https://eventmaster-dc.herokuapp.com/login", user)
+      .then((result) => {
+        if (result.data.token) {
+          const token = result.data.token;
+          localStorage.setItem("jsonwebtoken", token);
+          setAuthenticationHeader(token);
+          setMessage("");
+          history.push("/");
+        } else {
+          setMessage("Your username or password is not correct!");
+        }
+      });
   };
   return (
     <>
@@ -111,6 +125,7 @@ function Login(props) {
             ></input>
             <button onClick={handleLogin}>Login</button>
           </LoginBar>
+          <ErrorMessage>{message ? <p>{message}</p> : null}</ErrorMessage>
           <NavLink to="/register" activeStyle>
             <button>Register</button>
           </NavLink>
@@ -119,5 +134,9 @@ function Login(props) {
     </>
   );
 }
-
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.isAuthenticated,
+  };
+};
+export default connect()(Login);

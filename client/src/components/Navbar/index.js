@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import {
   Nav,
   NavLink,
@@ -8,7 +9,11 @@ import {
   NavBtnLink,
 } from "./NavbarElements";
 
-const Navbar = () => {
+const Navbar = (props) => {
+  const handleLogout = (props) => {
+    localStorage.removeItem("jsonwebtoken");
+    // props.onLogOut();
+  };
   return (
     <>
       <Nav>
@@ -23,18 +28,26 @@ const Navbar = () => {
           <NavLink to="/add-event" activeStyle>
             Add Event
           </NavLink>
-          <NavLink to="/sign-up" activeStyle>
+          <NavLink to="/invitation" activeStyle>
             Invitation Request
           </NavLink>
-          {/* Second Nav */}
-          {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
-        </NavMenu>
-        <NavBtn>
+          {/* <NavBtnLink to="/login" onClick={() => handleLogout()}>
+            Log out
+          </NavBtnLink> */}
           <NavBtnLink to="/login">Sign In</NavBtnLink>
-        </NavBtn>
+        </NavMenu>
       </Nav>
     </>
   );
 };
-
+// const mapStateToProps = (state) => {
+//   return {
+//     isAuthenticate: state.isAuthenticate,
+//   };
+// };
+// const mapDistpatchToProps = (dispath) => {
+//   return {
+//     onLogOut: () => dispath({ type: "Increment" }),
+//   };
+// };
 export default Navbar;

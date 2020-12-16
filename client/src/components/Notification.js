@@ -7,7 +7,9 @@ function Notification() {
     fetchAlertEvent();
   }, []);
   const fetchAlertEvent = async () => {
-    let resultEvent = await axios.get("http://localhost:8080/alertEvent");
+    let resultEvent = await axios.get(
+      "https://eventmaster-dc.herokuapp.com/alertEvent"
+    );
     let alertEvent = resultEvent.data.filter((event) => {
       return event.userEvent.isupdated;
     });

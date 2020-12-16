@@ -12,6 +12,7 @@ const EventContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 40px;
   }
 `;
 
@@ -97,6 +98,12 @@ const ButtonWrapper = styled.div`
     cursor: pointer;
   }
 `;
+const UpdatedEvent = styled.div`
+  color: Blue;
+`;
+const CovidAlert = styled.div`
+  color: red;
+`;
 
 //function Section
 
@@ -120,7 +127,7 @@ function Events(props) {
       "-" +
       today.getDate();
     console.log(date);
-    let resultEvent = await axios.get("http://localhost:8080/");
+    let resultEvent = await axios.get("https://eventmaster-dc.herokuapp.com/");
     const sortedEvent = await resultEvent.data.sort((a, b) => {
       return (
         parseInt(a.userEvent.date.split("-").join("")) -
@@ -174,7 +181,7 @@ function Events(props) {
   };
 
   const deleteEvent = async (id) => {
-    await axios.post(`http://localhost:8080/delete-event/${id}`);
+    await axios.post(`https://eventmaster-dc.herokuapp.com/delete-event/${id}`);
     fetchEvents();
   };
   const showModalonClick = (eventModal) => {
@@ -211,6 +218,12 @@ function Events(props) {
             Location:{event.userEvent.address} {event.userEvent.city}{" "}
             {event.userEvent.state} {event.userEvent.postcode}{" "}
           </p>
+          {event.userEvent.isupdated ? (
+            <UpdatedEvent>This Event has been updated by the Host</UpdatedEvent>
+          ) : null}
+          {event.userEvent.covidStatus ? (
+            <CovidAlert>Covid Alert!</CovidAlert>
+          ) : null}
           <EventTiming>
             <img src={timelogo} />
             {event.userEvent.time}

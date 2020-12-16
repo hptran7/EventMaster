@@ -96,11 +96,11 @@ function EventUpdate(props) {
   }, []);
   const { eventid } = useParams();
   const handleOnClick = async () => {
-    const url = `http://localhost:8080/update-event/${eventid}`;
+    const url = `https://eventmaster-dc.herokuapp.com/update-event/${eventid}`;
     await axios.post(url, event).then(props.history.push("/"));
   };
   const handleOnLoad = async () => {
-    const url = `http://localhost:8080/update-event/${eventid}`;
+    const url = `https://eventmaster-dc.herokuapp.com/update-event/${eventid}`;
     const needUpdatedEvent = await axios.get(url);
     setEventTarger(needUpdatedEvent.data);
   };

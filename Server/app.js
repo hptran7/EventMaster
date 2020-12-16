@@ -8,6 +8,8 @@ const authentication = require("./authMiddleware");
 app.use(cors());
 app.use(express.json());
 
+const PORT = process.env.PORT || 8080;
+
 app.get("/hello", (req, res) => {
   res.send("hello");
 });
@@ -146,12 +148,10 @@ app.post("/update-event/:eventID", authentication, (req, res) => {
 app.post("/update-event-covid/:eventID", authentication, (req, res) => {
   const id = req.params.eventID;
   const covidStatus = 1;
-  const isupdated = 1;
 
   models.Event.update(
     {
       covidStatus: covidStatus,
-      isupdated: isupdated,
     },
     {
       where: {
@@ -196,6 +196,55 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.listen(8080, () => {
+app.post("/invite-friend", authentication, async (req, res) => {
+  const invitedUser = req.body.invitedUser;
+  const eventId = req.body.eventId;
+  const isActive = 1;
+  const persistedUser = await models.User.findOne({
+    where: {
+      username: invitedUser,
+    },
+  });
+  console.log(persistedUser);
+
+  if (persistedUser) {
+    const invitation = models.Invitation.build({
+      invitedUser: invitedUser,
+      eventId: eventId,
+      isActive: 1,
+    });
+    await invitation.save();
+    res.json({ success: true });
+  } else {
+    res.json({ success: false });
+  }
+});
+app.get("/invitation", authentication, async (req, res) => {
+  const userId = res.locals.userId;
+  const persistedUser = await models.User.findOne({
+    where: {
+      id: userId,
+    },
+  });
+  const persistedUsername = persistedUser.dataValues.username;
+  const invitations = await models.Invitation.findAll({
+    include: [{ model: models.Event, as: "userEvent" }],
+    where: {
+      invitedUser: persistedUsername,
+    },
+  });
+  res.json(invitations);
+});
+
+app.post("/update-invitation/:invitationid", async (req, res) => {
+  const invitationId = req.params.invitationid;
+  models.Invitation.destroy({
+    where: {
+      id: invitationId,
+    },
+  });
+});
+
+app.listen(PORT, () => {
   console.log("Server is Running");
 });

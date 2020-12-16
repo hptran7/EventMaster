@@ -12,11 +12,12 @@ import Invitation from "./components/Invitation";
 import Notification from "./components/Notification";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import reducer from "./css/store/reducer";
+import reducer from "./store/reducer";
 import { setAuthenticationHeader } from "./utils/authenticate";
 import EventUpdate from "./components/EventUpdate";
 import history from "./utils/history";
 import Register from "./components/Register";
+import requireAuth from "./components/requireAuth";
 const store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -25,19 +26,35 @@ const store = createStore(
 const token = localStorage.getItem("jsonwebtoken");
 setAuthenticationHeader(token);
 
+if (token) {
+  store.dispatch({
+    type: "ON_AUTH",
+  });
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router history={history}>
         <BaseLayout>
           <Switch>
-            <Route component={App} path="/" exact></Route>
-            <Route component={AddEvent} path="/add-event"></Route>
-            <Route component={EventApi} path="/event-api"></Route>
+            <Route component={requireAuth(App)} path="/" exact></Route>
+            <Route component={requireAuth(AddEvent)} path="/add-event"></Route>
+            <Route component={requireAuth(EventApi)} path="/event-api"></Route>
+            <Route
+              component={requireAuth(Invitation)}
+              path="/invitation"
+            ></Route>
             <Route component={Login} path="/login"></Route>
             <Route component={Register} path="/register"></Route>
-            <Route component={Invitation} path="/invitation-notice"></Route>
-            <Route component={Notification} path="/notification"></Route>
+            <Route
+              component={requireAuth(Invitation)}
+              path="/invitation-notice"
+            ></Route>
+            <Route
+              component={requireAuth(Notification)}
+              path="/notification"
+            ></Route>
             <Route
               component={EventUpdate}
               path="/update-event/:eventid"

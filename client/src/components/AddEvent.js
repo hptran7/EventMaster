@@ -89,7 +89,7 @@ function AddEvent(props) {
   };
   const handleOnClick = async () => {
     await axios
-      .post("http://localhost:8080/add-event", event)
+      .post("https://eventmaster-dc.herokuapp.com/add-event", event)
       .then((result) => setNewEventId(result.data.success))
       .then(history.push("/"));
   };

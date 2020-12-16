@@ -94,36 +94,67 @@ const AddFriendSection = styled.div`
 function Modal(props) {
   const [showAddFriend, setshowAddFriend] = useState(false);
   const [userRequest, setuserRequest] = useState({});
+  const [invitationResult, setInvitationResult] = useState("");
 
   const handleAddFriendOnChange = (e) => {
     setuserRequest({
+      ...userRequest,
       [e.target.name]: e.target.value,
     });
   };
-  const handleSendRequestClick = () => {
+  const handleSendRequestClick = async (id) => {
     console.log(userRequest);
-  };
-
-  const checkHost = (userId, hostId) => {
-    if (userId == hostId) {
-      console.log("good");
-    } else {
-      console.log("bad");
-    }
+    await Axios.post(
+      "https://eventmaster-dc.herokuapp.com/invite-friend",
+      userRequest
+    ).then((result) => {
+      if (result.data.success) {
+        setInvitationResult("Your invitation has been sent");
+      } else {
+        setInvitationResult("Please enter correct username");
+      }
+    });
   };
 
   const joinEvent = async () => {
-    Axios.post("http://localhost:8080/add-event", props.detail);
+    await Axios.post(
+      "https://eventmaster-dc.herokuapp.com/add-event",
+      props.detail
+    );
+  };
+
+  const acceptRequest = async (id) => {
+    await Axios.post(
+      "https://eventmaster-dc.herokuapp.com/add-event",
+      props.detail.userEvent
+    );
+    denyRequest(id);
+  };
+  const denyRequest = async (id) => {
+    Axios.post(`http://eventmaster-dc.herokuapp.com/update-invitation/${id}`);
+    history.push("/");
   };
   const inviteFriend = async (id) => {
-    console.log(id);
+    await setuserRequest({});
+    setInvitationResult("");
+    setuserRequest({
+      eventId: id,
+    });
     setshowAddFriend((prev) => !prev);
   };
   const updateEvent = async (id) => {
     history.push(`/update-event/${id}`);
   };
   const covidAlert = async (id) => {
-    await Axios.post(`http://localhost:8080/update-event-covid/${id}`);
+    await Axios.post(
+      `https://eventmaster-dc.herokuapp.com/update-event-covid/${id}`
+    ).then((result) => {
+      if (result.data.success) {
+        alert(
+          "Don't worry! Your guests have been alerted about the Covid situation "
+        );
+      }
+    });
   };
   if (props.parentComponent == "EventApi") {
     return (
@@ -170,7 +201,10 @@ function Modal(props) {
                 <p>{props.detail.userEvent.location}</p>
                 <p>{props.detail.userEvent.address}</p>
                 <p>{props.detail.userEvent.city}</p>
-                <p>{props.detail.userEvent.state}</p>
+                <p>
+                  {props.detail.userEvent.state},{" "}
+                  {props.detail.userEvent.postcode}
+                </p>
                 <Info>{props.detail.userEvent.info}</Info>
                 <ButtonWrapper>
                   <button onClick={() => inviteFriend(props.detail.id)}>
@@ -192,11 +226,14 @@ function Modal(props) {
                     <input
                       type="text"
                       onChange={handleAddFriendOnChange}
-                      name="user"
+                      name="invitedUser"
                     />
-                    <button onClick={() => handleSendRequestClick()}>
+                    <button
+                      onClick={() => handleSendRequestClick(props.detail.id)}
+                    >
                       Send Request
                     </button>
+                    <div>{invitationResult}</div>
                   </AddFriendSection>
                 ) : null}
               </ModalContent>
@@ -205,6 +242,41 @@ function Modal(props) {
                 onClick={() => {
                   props.setShowModal((prev) => !prev);
                   setshowAddFriend(false);
+                }}
+              />
+            </ModalWrapper>
+          </Background>
+        ) : null}
+      </div>
+    );
+  } else if (props.parentComponent == "invitation") {
+    return (
+      <div>
+        {props.showModal ? (
+          <Background>
+            <ModalWrapper showModal={props.showModal}>
+              <ModalImg src={props.detail.userEvent.image} alt="camera" />
+              <ModalContent>
+                <h2>{props.detail.userEvent.name}</h2>
+                <p>{props.detail.userEvent.location}</p>
+                <p>{props.detail.userEvent.time}</p>
+                <p>{props.detail.userEvent.date}</p>
+                <p>{props.detail.userEvent.location}</p>
+                <p>{props.detail.userEvent.address}</p>
+                <p>{props.detail.userEvent.city}</p>
+                <p>{props.detail.userEvent.state}</p>
+                <Info>{props.detail.userEvent.info}</Info>
+                <button onClick={() => acceptRequest(props.detail.id)}>
+                  Join Now
+                </button>
+                <button onClick={() => denyRequest(props.detail.id)}>
+                  Deny
+                </button>
+              </ModalContent>
+              <CloseModalButton
+                aria-label="Close modal"
+                onClick={() => {
+                  props.setShowModal((prev) => !prev);
                 }}
               />
             </ModalWrapper>

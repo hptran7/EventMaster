@@ -39,7 +39,7 @@ export const Bars = styled(FaBars)`
 export const NavMenu = styled.div`
   display: flex;
   align-items: center;
-  margin-right: -20px;
+  margin-right: -10px;
 
   @media screen and (max-width: 768px) {
     display: none;
@@ -71,6 +71,5 @@ export const NavBtnLink = styled(Link)`
   &:hover {
     transition: all 0.2s ease-in-out;
     background: #3d9c80;
-    color: #;
   }
 `;
