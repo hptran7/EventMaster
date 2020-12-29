@@ -1,13 +1,14 @@
 import { React } from "react";
 
 import "../css/index.css";
-import Navbar from "./Navbar";
+import MenuBar from "./MenuBar";
+// import Navbar from "./Navbar";
 
 function BaseLayout(props) {
   return (
     <>
       <header>
-        <Navbar />
+        <MenuBar />
       </header>
       <div className="Content">{props.children}</div>
       <footer>footer</footer>

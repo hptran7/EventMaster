@@ -1,95 +1,16 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { MdClose } from "react-icons/md";
 import Axios from "axios";
 import history from "../utils/history";
-
-const Background = styled.div`
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  top: 0;
-  left: 0;
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalWrapper = styled.div`
-  width: 1000px;
-  height: 600px;
-  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-  background: #fff;
-  color: #000;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  position: relative;
-  z-index: 10;
-  border-radius: 10px;
-`;
-
-const ModalImg = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 10px 0 0 10px;
-  background: #000;
-`;
-
-const ModalContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  line-height: 1.8;
-  color: #141414;
-  p {
-    margin: 0;
-    color: black;
-  }
-  button {
-    padding: 10px 24px;
-    background: #266150;
-    color: #fff;
-    border-radius: 10px;
-    margin: 5px;
-    font-family: "Roboto", sans-serif;
-  }
-`;
-
-const Info = styled.div`
-  height: 30px;
-  overflow: auto;
-`;
-
-const CloseModalButton = styled(MdClose)`
-  cursor: pointer;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  z-index: 10;
-`;
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  button {
-    padding: 10px 24px;
-    background: #266150;
-    color: #fff;
-    /* border: none; */
-    margin: 0.5 px;
-    border-radius: 0.5px;
-  }
-`;
-const AddFriendSection = styled.div`
-  padding: 10px;
-  button {
-    padding: 5px 10px;
-  }
-`;
+import {
+  Background,
+  ModalWrapper,
+  ModalImg,
+  ModalContent,
+  Info,
+  CloseModalButton,
+  ButtonWrapper,
+  AddFriendSection,
+} from "./ModalElements";
 
 function Modal(props) {
   const [showAddFriend, setshowAddFriend] = useState(false);

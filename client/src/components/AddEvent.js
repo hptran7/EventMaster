@@ -3,79 +3,15 @@ import axios from "axios";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import history from "../utils/history";
-
-//Styled component Section
-const EventContainer = styled.div`
-  font-family: "Roboto", sans-serif;
-  max-width: 800px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  background: #fdf8f5;
-  box-shadow: 0 4px 16px -8px rgba(0, 0, 0, 0.4);
-  padding: 10px;
-  border-radius: 10px;
-  /* justify-content: center; */
-  /* align-items: center; */
-  input {
-    width: 1000px;
-    height: 30px;
-  }
-  h1 {
-    color: #4f4846;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-`;
-
-const EventName = styled.div`
-  display: flex;
-  margin-bottom: 3px;
-  p {
-    color: black;
-  }
-`;
-const EventImage = styled.div`
-  display: flex;
-  margin-bottom: 3px;
-
-  p {
-    color: black;
-  }
-`;
-const EventDateTime = styled.div`
-  display: flex;
-  margin-bottom: 3px;
-
-  p {
-    color: black;
-  }
-`;
-const EventLocation = styled.div`
-  display: flex;
-  margin-bottom: 3px;
-
-  p {
-    color: black;
-  }
-`;
-const EventAddress = styled.div`
-  display: flex;
-  margin-bottom: 3px;
-
-  p {
-    color: black;
-  }
-`;
-const EventCity = styled.div`
-  display: flex;
-  margin-bottom: 3px;
-
-  p {
-    color: black;
-  }
-`;
+import {
+  EventContainer,
+  EventName,
+  EventImage,
+  EventDateTime,
+  EventLocation,
+  EventAddress,
+  EventCity,
+} from "./AddEventElements";
 
 //function Section
 function AddEvent(props) {

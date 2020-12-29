@@ -8,6 +8,11 @@ const reducer = (state = initialState, action) => {
       ...state,
       isAuthenticated: true,
     };
+  } else if ((action.type = "onLoginSuccess")) {
+    return {
+      ...state,
+      isAuthenticated: false,
+    };
   }
   return state;
 };

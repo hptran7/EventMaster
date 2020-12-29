@@ -17,7 +17,11 @@ const Navbar = (props) => {
   return (
     <>
       <Nav>
-        <Bars />
+        <Bars onClick={props.toggle} />
+        <NavLink to="/">
+          {/* <img src={require('../../images/logo.svg')} alt='logo' /> */}
+          <div>Logo</div>
+        </NavLink>
         <NavMenu>
           <NavLink to="/" activeStyle>
             Main Page

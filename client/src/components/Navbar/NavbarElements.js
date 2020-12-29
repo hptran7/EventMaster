@@ -19,7 +19,7 @@ export const NavLink = styled(Link)`
   cursor: pointer;
   &.active {
     color: #15cdfc;
-  }
+  }ç
 `;
 
 export const Bars = styled(FaBars)`

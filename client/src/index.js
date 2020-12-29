@@ -38,14 +38,15 @@ ReactDOM.render(
       <Router history={history}>
         <BaseLayout>
           <Switch>
-            <Route component={requireAuth(App)} path="/" exact></Route>
+            <Route component={App} path="/" exact></Route>
+            {/* <Route component={login} path="/" exact></Route> */}
             <Route component={requireAuth(AddEvent)} path="/add-event"></Route>
             <Route component={requireAuth(EventApi)} path="/event-api"></Route>
             <Route
               component={requireAuth(Invitation)}
               path="/invitation"
             ></Route>
-            <Route component={Login} path="/login"></Route>
+            <Route component={Login} path="/login" exact></Route>
             <Route component={Register} path="/register"></Route>
             <Route
               component={requireAuth(Invitation)}

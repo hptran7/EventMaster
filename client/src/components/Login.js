@@ -85,17 +85,18 @@ function Login(props) {
     });
   };
   const handleLogin = async () => {
-    await perFormLoginRequest();
+    // await perFormLoginRequest();
+    // props.onLogin();
   };
 
   const perFormLoginRequest = async () => {
     await axios
       .post("https://eventmaster-dc.herokuapp.com/login", user)
-      .then((result) => {
+      .then(async (result) => {
         if (result.data.token) {
           const token = result.data.token;
           localStorage.setItem("jsonwebtoken", token);
-          setAuthenticationHeader(token);
+          await setAuthenticationHeader(token);
           setMessage("");
           history.push("/");
         } else {
@@ -139,4 +140,10 @@ const mapStateToProps = (state) => {
     isAuthenticated: state.isAuthenticated,
   };
 };
-export default connect()(Login);
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     onLogin: () => dispatch({ type: "onLoginSuccess" }),
+//   };
+// };
+export default connect(mapStateToProps)(Login);
