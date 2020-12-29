@@ -81,6 +81,12 @@ app.post("/add-event", authentication, async (req, res) => {
   res.json({ success: true });
 });
 
+app.post("/accept-invitation", authentication, async (req, res) => {
+  const userId = res.locals.userId;
+  let eventId = req.body.id;
+  await addUserEvent(userId, eventId);
+});
+
 app.post("/userEvent", authentication, (req, res) => {
   let userId = req.body.userId;
   let eventId = req.body.eventId;

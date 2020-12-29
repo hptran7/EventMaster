@@ -44,9 +44,10 @@ function Modal(props) {
     );
   };
 
-  const acceptRequest = async (id) => {
+  const acceptRequest = async (id, eventid) => {
+    console.log(eventid);
     await Axios.post(
-      "https://eventmaster-dc.herokuapp.com/add-event",
+      "https://eventmaster-dc.herokuapp.com/accept-invitation",
       props.detail.userEvent
     );
     denyRequest(id);
@@ -187,7 +188,11 @@ function Modal(props) {
                 <p>{props.detail.userEvent.city}</p>
                 <p>{props.detail.userEvent.state}</p>
                 <Info>{props.detail.userEvent.info}</Info>
-                <button onClick={() => acceptRequest(props.detail.id)}>
+                <button
+                  onClick={() =>
+                    acceptRequest(props.detail.id, props.detail.userEvent.id)
+                  }
+                >
                   Join Now
                 </button>
                 <button onClick={() => denyRequest(props.detail.id)}>
