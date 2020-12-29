@@ -41,7 +41,9 @@ function Modal(props) {
     await Axios.post(
       "https://eventmaster-dc.herokuapp.com/add-event",
       props.detail
-    );
+    ).then((result) => {
+      history.push("/");
+    });
   };
 
   const acceptRequest = async (id, eventid) => {
@@ -49,8 +51,8 @@ function Modal(props) {
     await Axios.post(
       "https://eventmaster-dc.herokuapp.com/accept-invitation",
       props.detail.userEvent
-    );
-    denyRequest(id);
+    ).then((result) => history.push("/"));
+    await denyRequest(id);
   };
   const denyRequest = async (id) => {
     Axios.post(`http://eventmaster-dc.herokuapp.com/update-invitation/${id}`);
