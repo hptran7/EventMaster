@@ -38,7 +38,7 @@ ReactDOM.render(
       <Router history={history}>
         <BaseLayout>
           <Switch>
-            <Route component={App} path="/" exact></Route>
+            <Route component={requireAuth(App)} path="/" exact></Route>
             {/* <Route component={login} path="/" exact></Route> */}
             <Route component={requireAuth(AddEvent)} path="/add-event"></Route>
             <Route component={requireAuth(EventApi)} path="/event-api"></Route>

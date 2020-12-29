@@ -85,8 +85,7 @@ function Login(props) {
     });
   };
   const handleLogin = async () => {
-    // await perFormLoginRequest();
-    // props.onLogin();
+    await perFormLoginRequest();
   };
 
   const perFormLoginRequest = async () => {
@@ -97,6 +96,7 @@ function Login(props) {
           const token = result.data.token;
           localStorage.setItem("jsonwebtoken", token);
           await setAuthenticationHeader(token);
+          await props.onLogin();
           setMessage("");
           history.push("/");
         } else {
@@ -124,7 +124,7 @@ function Login(props) {
               placeholder="password"
               onChange={handelOnChange}
             ></input>
-            <button onClick={handleLogin}>Login</button>
+            <button onClick={() => handleLogin()}>Login</button>
           </LoginBar>
           <ErrorMessage>{message ? <p>{message}</p> : null}</ErrorMessage>
           <NavLink to="/register" activeStyle>
@@ -141,9 +141,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     onLogin: () => dispatch({ type: "onLoginSuccess" }),
-//   };
-// };
-export default connect(mapStateToProps)(Login);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLogin: () => dispatch({ type: "ON_AUTH" }),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
