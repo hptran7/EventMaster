@@ -1,6 +1,6 @@
-<h1> BujoToGo </h1>
+<h1> Event Master </h1>
 
-<img src="./bujo-client/src/images/bujotogologo.png" width="100" alt="BujoToGo logo" />
+<img src="./images/logo4.png" width="100" alt="BujoToGo logo" />
 
 <h2> Summary </h2>
 
