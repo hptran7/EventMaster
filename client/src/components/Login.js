@@ -10,6 +10,7 @@ const Container = styled.div`
   font-family: "Roboto", sans-serif;
   max-width: 1400px;
   margin: 0 auto;
+
   h1 {
     display: flex;
     align-items: center;
@@ -109,6 +110,7 @@ function Login(props) {
       <Container>
         <LoginContainer>
           <h2>Login</h2>
+          <h4>Welcome to Event Master, please login to explore my site!</h4>
           <LoginBar>
             <p>Username:</p>
             <input
