@@ -28,7 +28,8 @@
 <img src="./images/main.png" alt="Main Page" width="315" />
 <img src="./images/api.png" alt="Public event search" width="315" />
 <img src="./images/addEvent.png" alt="Event create" width="315" />
-<img src="./images/eventdetail.png" alt="Event detail width="315" />
+<img src="./images/eventdetail.png" alt="Event detail" width="315" />
+<img src="./images/invitation.png" alt="Invitation request" width="315" />
 
 ## Getting Started
 
