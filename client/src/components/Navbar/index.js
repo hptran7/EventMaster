@@ -1,5 +1,6 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from "react";
+import logo from "../../image/logo4.png";
+import history from "../../utils/history";
 import {
   Nav,
   NavLink,
@@ -7,20 +8,28 @@ import {
   NavMenu,
   NavBtn,
   NavBtnLink,
+  Logo,
 } from "./NavbarElements";
 
 const Navbar = (props) => {
+  const [checkAuthen, setCheckAuthen] = useState(true);
+  useEffect(() => {
+    if (props.isAuthent) {
+      setCheckAuthen(true);
+    }
+  }, []);
   const handleLogout = (props) => {
     localStorage.removeItem("jsonwebtoken");
-    // props.onLogOut();
+    setCheckAuthen(false);
+    history.push("/login");
   };
   return (
     <>
       <Nav>
         <Bars onClick={props.toggle} />
         <NavLink to="/">
-          {/* <img src={require('../../images/logo.svg')} alt='logo' /> */}
-          <div>Logo</div>
+          {/* <img src={logo} alt="logo" /> */}
+          <Logo src={logo} />
         </NavLink>
         <NavMenu>
           <NavLink to="/" activeStyle>
@@ -35,23 +44,16 @@ const Navbar = (props) => {
           <NavLink to="/invitation" activeStyle>
             Invitation Request
           </NavLink>
-          {/* <NavBtnLink to="/login" onClick={() => handleLogout()}>
-            Log out
-          </NavBtnLink> */}
-          <NavBtnLink to="/login">Sign In</NavBtnLink>
+          {checkAuthen ? (
+            <NavBtnLink to="/login" onClick={() => handleLogout()}>
+              Log out
+            </NavBtnLink>
+          ) : null}
+          {!checkAuthen ? <NavBtnLink to="/login">Sign In</NavBtnLink> : null}
         </NavMenu>
       </Nav>
     </>
   );
 };
-// const mapStateToProps = (state) => {
-//   return {
-//     isAuthenticate: state.isAuthenticate,
-//   };
-// };
-// const mapDistpatchToProps = (dispath) => {
-//   return {
-//     onLogOut: () => dispath({ type: "Increment" }),
-//   };
-// };
+
 export default Navbar;

@@ -1,4 +1,5 @@
 import { React } from "react";
+import { connect } from "react-redux";
 
 import "../css/index.css";
 import MenuBar from "./MenuBar";
@@ -8,12 +9,16 @@ function BaseLayout(props) {
   return (
     <>
       <header>
-        <MenuBar />
+        <MenuBar isAuthent={props.isAuthenticate} />
       </header>
       <div className="Content">{props.children}</div>
       <footer>footer</footer>
     </>
   );
 }
-
-export default BaseLayout;
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticate: state.isAuthenticated,
+  };
+};
+export default connect(mapStateToProps)(BaseLayout);

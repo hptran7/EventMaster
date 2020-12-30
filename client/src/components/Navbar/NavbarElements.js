@@ -73,3 +73,7 @@ export const NavBtnLink = styled(Link)`
     background: #3d9c80;
   }
 `;
+
+export const Logo = styled.img`
+  width: 200px;
+`;
