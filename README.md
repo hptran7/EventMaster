@@ -1,6 +1,6 @@
 <h1> Event Master </h1>
 
-<img src="./images/logo4.png" width="100" alt="BujoToGo logo" />
+<img src="./images/logo4.png" width="150" alt="BujoToGo logo" />
 
 <h2> Summary </h2>
 
@@ -24,11 +24,11 @@
 
 ## Videos and Screenshots
 
-<img src="./screenshots/BujoToGo.gif" alt="gif walkthrough of BujoToGo" width="500" />
-<img src="./screenshots/bujomobile1.png" alt="mobile screenshot" width="315" />
-<img src="./screenshots/bujomobile2.png" alt="mobile screenshot" width="315" />
-<img src="./screenshots/bujomobile3.png" alt="mobile screenshot" width="315" />
-<img src="./screenshots/bujomobile4.png" alt="mobile screenshot" width="315" />
+<img src="./images/login.png" alt="Login page" width="500" />
+<img src="./images/main.png" alt="Main Page" width="315" />
+<img src="./images/api.png" alt="Public event search" width="315" />
+<img src="./images/addEvent.png" alt="Event create" width="315" />
+<img src="./images/eventdetail.png" alt="Event detail width="315" />
 
 ## Getting Started
 
