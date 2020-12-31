@@ -18,7 +18,7 @@
 
 ## Usage
 
-- Visit [Event Master](http://event-master-dc.surge.sh/) and sign in as guest(username: guest // password: password).
+- Visit [Event Master](http://event-master-dc.surge.sh/) and sign in as guest (username: guest // password: password).
 
 - Add, edit, and delete event, or find a public event and send out invitations. Events are stored with date time strings and returned in chronological order based on the time range of the view.
 
