@@ -12,7 +12,9 @@ function BaseLayout(props) {
         <MenuBar isAuthent={props.isAuthenticate} />
       </header>
       <div className="Content">{props.children}</div>
-      <footer>Event Master</footer>
+      <footer>
+        <p className="footer">Event Master</p>
+      </footer>
     </>
   );
 }

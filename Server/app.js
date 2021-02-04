@@ -52,7 +52,9 @@ app.get("/update-event/:eventid", authentication, async (req, res) => {
 app.post("/add-event", authentication, async (req, res) => {
   const userId = res.locals.userId;
   let name = req.body.name;
-  let image = req.body.image ? req.body.image : "no Image";
+  let image = req.body.image
+    ? req.body.image
+    : "https://i.imgur.com/tKMYYfu.jpg";
   let date = req.body.date;
   let time = req.body.time;
   let location = req.body.location;
@@ -141,6 +143,7 @@ app.post("/update-event/:eventID", authentication, (req, res) => {
       city: city,
       state: state,
       address: address,
+      isupdated: 1,
     },
     {
       where: {

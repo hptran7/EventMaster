@@ -5,6 +5,7 @@ import { setAuthenticationHeader } from "../utils/authenticate";
 import history from "../utils/history";
 import styled from "styled-components";
 import { NavLink } from "../components/Navbar/NavbarElements";
+import { useHistory } from "react-router-dom";
 
 const Container = styled.div`
   font-family: "Roboto", sans-serif;
@@ -76,6 +77,7 @@ const ErrorMessage = styled.div`
 
 //Function section
 function Login(props) {
+  const reloeadHistory = useHistory();
   const [user, setUser] = useState({});
   const [message, setMessage] = useState("");
 
@@ -99,7 +101,8 @@ function Login(props) {
           await setAuthenticationHeader(token);
           await props.onLogin();
           setMessage("");
-          history.push("/");
+          await history.push("/");
+          reloeadHistory.go(0);
         } else {
           setMessage("Your username or password is not correct!");
         }

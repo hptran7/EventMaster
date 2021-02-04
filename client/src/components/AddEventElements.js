@@ -20,6 +20,12 @@ export const EventContainer = styled.div`
     align-items: center;
     justify-content: center;
   }
+  h5 {
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 export const EventName = styled.div`

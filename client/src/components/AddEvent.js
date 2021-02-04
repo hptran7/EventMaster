@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styled from "styled-components";
 import { connect } from "react-redux";
 import history from "../utils/history";
 import {
@@ -17,6 +16,7 @@ import {
 function AddEvent(props) {
   const [event, setEvent] = useState({});
   const [newEventId, setNewEventId] = useState(null);
+  const [message, setMessage] = useState("");
   const handleChange = (e) => {
     setEvent({
       ...event,
@@ -24,15 +24,29 @@ function AddEvent(props) {
     });
   };
   const handleOnClick = async () => {
-    await axios
-      .post("https://eventmaster-dc.herokuapp.com/add-event", event)
-      .then((result) => setNewEventId(result.data.success))
-      .then(history.push("/"));
+    if (
+      event.name &&
+      event.date &&
+      event.time &&
+      event.location &&
+      event.address &&
+      event.city &&
+      event.state &&
+      event.postcode
+    ) {
+      await axios
+        .post("https://eventmaster-dc.herokuapp.com/add-event", event)
+        .then((result) => setNewEventId(result.data.success))
+        .then(() => history.push("/"));
+    } else {
+      setMessage("!Please make sure all fields are filled in");
+    }
   };
 
   return (
     <EventContainer>
       <h1>Add Event</h1>
+      {message ? <h5>{message}</h5> : null}
       <EventName>
         <p>Name:</p>
         <input
